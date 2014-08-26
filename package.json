@@ -1,0 +1,23 @@
+{
+  "name": "exosphere",
+  "version": "0.10.31",
+  "description": "Cluster Visualization",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:phutchins/exosphere.git"
+  },
+  "keywords": [
+    "exosphere",
+    "visualization",
+    "cluster"
+  ],
+  "author": "Philip Hutchins",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/phutchins/exosphere/issues"
+  }
+}
