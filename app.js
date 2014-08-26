@@ -1,42 +1,59 @@
 // set variables for environment
 var express = require('express');
+var cookieParser = require('cookie-parser');
 var app = express();
 var path = require('path');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-// views as directory for all template files
-app.set('views', path.join(__dirname, 'views'));
+// Configure our application
+var port = 3000;
+app.set('port', process.env.PORT || port);
+app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
 
-// instruct express to serve up static assets
-app.use(express.static('public'));
+// Sessions
+app.use(cookieParser('s9e9c9r7e5t'))
 
-// Error handling
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  res.send(500, 'Something broke!');
+// Setup Routes
+app.get('/', function(req, res){
+  console.log("Cookies: ", req.cookies);
+  res.render('index', {
+    title: 'index'
+  });
 });
 
-// Test Object
-function Item(name, price) {
-  this.name = name;
-  this.price = price;
-}
-
-// Test Data
-var items = [
-  new Item('lamp', '247.00'),
-  new Item('desk', '22.00'),
-  new Item('book', '328')
-];
-
-// set routes
-app.get('/', function(req, res) {
-  res.render('index', { items: items });
+// Listen for Requests
+var server = http.listen(port, function(){
+  console.log('listening on *:3000');
 });
-app.get('/hello.txt', function(req, res) {
-  res.send('Hello World');
+var io = server.listen(server);
+//http.listen(3000, function(){
+//  console.log('listening on *:3000');
+//})
+
+// Socket IO
+var active_connections = 0;
+io.on('connection', function (socket) {
+  active_connections++;
+  io.emit('user:connect', active_connections);
+  // EVENT: User stops drawing something
+  socket.on('draw:progress', function (uid, co_ordinates) {
+    io.emit('draw:progress', uid, co_ordinates)
+  });
+  // EVENT: User stops drawing something
+  socket.on('draw:end', function (uid, co_ordinates) {
+    io.emit('draw:end', uid, co_ordinates)
+  });
 });
 
-// Set server port
-app.listen(3000);
-console.log('server is running');
+
+//io.on('connection', function(socket){
+//  console.log('User connected');
+//});
+
+// Enable Socket.io
+//http.listen(3000, function(){
+//  console.log('listening on *:3000');
+//});
