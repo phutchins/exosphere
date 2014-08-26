@@ -1,1 +1,10 @@
 <script src="//localhost:35729/livereload.js"></script>
+
+html
+  include header
+  body
+    block content
+      h1 Items
+      #items
+        for item in items
+          include item
