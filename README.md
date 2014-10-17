@@ -18,6 +18,12 @@ Check back soon...
 
 There are many awesome tools out there for building and manage an open source infrastructure. One piece that is missing however is something that lets you see the health and status of your entire cluster at once visually. That is the problem that I am trying to solve. It should be a modular solution that allows you to write plugins for your particular use case and share them with our community or use plugins that others have contributed.
 
+## Design
+
+* Visualization - D3 http://d3js.org/
+* Events -
+* SSH - Shync
+
 ### License
 
 fleet is released under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
